@@ -1,39 +1,32 @@
-# Compiler and flags
+SRCS =  ft_calloc.c     ft_isascii.c  ft_itoa.c ft_memcpy.c   ft_putchar_fd.c  ft_putstr_fd.c  ft_strdup.c    ft_strlcat.c  ft_strmapi.c  ft_strrchr.c  ft_tolower.c \
+ft_atoi.c   ft_isalnum.c  ft_isdigit.c  ft_memchr.c  ft_memmove.c  ft_putendl_fd.c  ft_split.c      ft_striteri.c  ft_strlcpy.c  ft_strncmp.c  ft_strtrim.c  ft_toupper.c \
+ft_bzero.c  ft_isalpha.c  ft_isprint.c  ft_memcmp.c  ft_memset.c   ft_putnbr_fd.c   ft_strchr.c     ft_strjoin.c   ft_strlen.c   ft_strnstr.c  ft_substr.c 
+
+SRCSBS = ft_lstnew_bonus.c	ft_lstadd_front_bonus.c ft_lstsize_bonus.c \
+        ft_lstlast_bonus.c ft_lstadd_back_bonus.c ft_lstdelone_bonus.c \
+        ft_lstclear_bonus.c ft_lstiter_bonus.c ft_lstmap_bonus.c
+OBJECT = $(SRCS:.c=.o)
+OBJECTBS = $(SRCSBS:.c=.o)
+
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-
-# Library name
+AR = ar rcs
 NAME = libft.a
 
-# Source files (only selected)
-SRC = ft_strlen.c ft_isascii.c ft_toupper.c
-
-# Object files
-OBJ = $(SRC:.c=.o)
-
-# Header file
-HDR = libft.h
-
-# Default target: build the library
 all: $(NAME)
 
-# Build the library from object files
-$(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+$(NAME): $(OBJECT)
+	$(AR) $(NAME) $(OBJECT)
 
-# Compile .c files to .o files, depends on header
-%.o: %.c $(HDR)
-	$(CC) $(CFLAGS) -c $< -o $@
+bonus: $(NAME) $(OBJECTBS)
+	$(AR) $(NAME) $(OBJECTBS)
 
-# Clean object files
 clean:
-	rm -f $(OBJ)
+	@rm -f $(OBJECT) $(OBJECTBS)
 
-# Clean object files + library
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
-# Rebuild everything
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all bonus clean fclean re
